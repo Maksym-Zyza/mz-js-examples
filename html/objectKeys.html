@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Test</title>
+
+    <style>
+      html,
+      body {
+        padding: 0;
+        margin: 0 20px;
+      }
+
+      /* Triggers cadr */
+
+      .trig-form {
+        margin-bottom: 30px;
+        padding: 2em;
+        width: 98%;
+        background: #fff;
+        border-radius: 4px;
+        box-shadow: 0 0.125rem 0.25rem 0 rgb(58 59 69 / 20%);
+      }
+
+      .trig-title {
+        display: block;
+        margin-right: 50px;
+        width: 100%;
+      }
+
+      .trig-operation {
+        font-size: 11px;
+      }
+
+      .trig-wraper {
+        display: block;
+        margin-bottom: 25px;
+        padding: 15px;
+        border: 1px solid #858796;
+        border-radius: 4px;
+      }
+
+      .trig-items {
+        display: flex;
+        align-items: center;
+      }
+
+      .trig-items > div {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-right: 30px;
+      }
+
+      .trig-select > select {
+        width: 150px;
+        height: 30px;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+
+      .trig-radio {
+        display: flex;
+        margin-top: 10px;
+        align-items: center;
+      }
+
+      .trig-radio > label {
+        margin-right: 10px;
+      }
+
+      .trig-radio > input {
+        width: 23px;
+        margin-top: 10px;
+        margin-bottom: 15px;
+      }
+
+      trig-radio:focus input {
+        outline: none;
+        border: 1px solid #2fa803;
+      }
+
+      .trig-line-number {
+        width: 115px;
+        margin-top: 5px;
+        margin-bottom: 15px;
+      }
+
+      .trig-btn {
+        display: flex;
+      }
+
+      .trig-btn > button {
+        margin-left: auto;
+      }
+
+      .roleParamDiv{
+        margin: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <form class="trig-form">
+      <h4 class="trig-title">Triggers</h4>
+      <span class="trig-operation">Trigger-operation</span>
+      <div class="trig-wraper">
+        <div class="trig-items">
+          <div class="trig-select">
+            <label>Value in report</label>
+            <select class="trig-report">
+              <option></option>
+              <option>value 1</option>
+              <option>value 2</option>
+            </select>
+          </div>
+          <div class="trig-select">
+            <label>Data type</label>
+            <select class="trig-type">
+              <option></option>
+              <option>string</option>
+              <option>number</option>
+              <option>date</option>
+              <option>boolean</option>
+            </select>
+          </div>
+          <div class="trig-select">
+            <label>Trigger</label>
+            <select class="trig-trigger">
+              <!-- getTrigersByType -->
+            </select>
+          </div>
+          <div class="trig-input">
+            <label>Threshold value</label>
+            <input
+              type="text"
+              id="trig-value-text"
+              name="value"
+              minlength="1"
+            />
+            <input type="number" id="trig-value-number" name="value" min="0" />
+            <input type="date" id="trig-value-date" name="value" />
+          </div>
+        </div>
+        <div class="trig-form-radio">
+          <div class="trig-radio">
+            <input
+              id="all-lines"
+              class="radio-lines"
+              name="lines"
+              type="radio"
+              value="allLines"
+              checked
+            />
+            <label for="all-lines">All lines</label>
+            <input
+              id="specific-lines"
+              class="radio-lines"
+              name="lines"
+              type="radio"
+              value="specificLines"
+            />
+            <label for="specific-lines">Specific line</label>
+          </div>
+          <input
+            class="trig-line-number"
+            type="number"
+            id="line-number"
+            value=""
+            min="0"
+            placeholder="Line number"
+          />
+        </div>
+        <div class="trig-count" id="trig-count">
+          <label class="trig-count-label">Trigger count: </label>
+          <div class="trig-count-value" id="trig-count-value">0</div>
+        </div>
+      </div>
+
+      <div class="trig-btn">
+        <button
+          id="trig-btn"
+          class="btn btn-primary btn-viewresults btn-search"
+          type="submit"
+          identifier="1"
+        >
+          Search <i class="fa fa-search"></i>
+        </button>
+      </div>
+    </form>
+
+
+    <div class="roleParamDiv">
+      <form class="report-params-form">
+        <li>
+      <ul class="multiple-container">
+        <li class="multiple-param">
+          <input
+            type="{{#if type.date}}date{{/if}}{{#if type.string}}text{{/if}}{{#if type.number}}number{{/if}}"
+            id="{{dbName}}" name="{{dbName}}" {{#unless optional}}>
+
+          <button class="btn btn-success add-value"><i class="fa fa-plus"></i></button></li>
+        </li>
+        <li class="multiple-param">
+          <input
+            type="{{#if type.date}}date{{/if}}{{#if type.string}}text{{/if}}{{#if type.number}}number{{/if}}"
+            id="{{dbName}}" name="{{dbName}}" {{#unless optional}}>
+
+          <button class="btn btn-success add-value"><i class="fa fa-plus"></i></button></li>
+        </li>
+        <li class="multiple-param">
+          <input
+            type="{{#if type.date}}date{{/if}}{{#if type.string}}text{{/if}}{{#if type.number}}number{{/if}}"
+            id="{{dbName}}" name="{{dbName}}" {{#unless optional}}>
+
+          <button class="btn btn-success add-value"><i class="fa fa-plus"></i></button></li>
+        </li>
+      </ul>
+    </li>
+    </form>
+      <button id='btn-role' class="btn btn-primary mr-3 ml-3 btn-viewresults btn-search" type="submit" identifier="{{id}}">Search
+        <i class="fa fa-search"></i></button>
+    </div>
+    <script>
+      const triggers = [
+        {
+          toEqual: {
+            number: true,
+            string: true,
+            date: true,
+            boolean: false,
+          },
+        },
+        {
+          toBeGreaterThan: {
+            number: true,
+            string: false,
+            date: true,
+            boolean: false,
+          },
+        },
+        {
+          toBeLessThan: {
+            number: true,
+            string: false,
+            date: true,
+            boolean: false,
+          },
+        },
+        {
+          toMatch: {
+            number: false,
+            string: true,
+            date: false,
+            boolean: false,
+          },
+        },
+        {
+          toBeTruthy: {
+            number: false,
+            string: false,
+            date: false,
+            boolean: true,
+          },
+        },
+        {
+          toBeFalsy: {
+            number: false,
+            string: false,
+            date: false,
+            boolean: true,
+          },
+        },
+        {
+          toBeNull: {
+            number: true,
+            string: true,
+            date: true,
+            boolean: true,
+          },
+        },
+      ];
+
+
+      const $paramsForm = document.querySelector(".report-params-form")
+      const $roleParams = [...document.querySelector(".multiple-container").children]
+      const $roleLi = document.querySelector(".multiple-param");
+      const $roleBtn = document.querySelector("#btn-role");
+
+      const $trigReport = document.querySelector(".trig-report");
+      const $trigType = document.querySelector(".trig-type");
+      const $trigTrigger = document.querySelector(".trig-trigger");
+      const $trigText = document.getElementById("trig-value-text");
+      const $trigNumber = document.getElementById("trig-value-number");
+      const $trigDate = document.getElementById("trig-value-date");
+      const $lineNumber = document.getElementById("line-number");
+      const $trigBtn = document.querySelector("#trig-btn");
+      const $trigCountValue = document.getElementById("trig-count-value");
+
+      const result = {count: 4}
+      $trigCountValue.innerHTML = result.count ? result.count : 0;
+      if(result.count === $trigCountValue.textContent){
+        console.log($trigCountValue.textContent);
+      }
+
+      $roleBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        
+        let roleParams = [];
+        $roleParams.forEach(el => {
+        roleParams.push(el.childNodes[1].value)
+        })
+        console.log(roleParams);
+        // console.log($paramsForm);
+      })
+
+
+      let type = "";
+      let value = "";
+      let trigger = "";
+      let alertObj = {};
+
+      // ==== getTrigersByType
+      let trigersByType = [];
+      function getTrigersByType(trigArr) {
+        let result = [""];
+        for (let i = 0; i < trigArr.length; i++) {
+          let trig = trigArr[i];
+          let trigType = Object.values(trig).filter((el) => el[type]);
+          if (trigType.length > 0) {
+            result.push(Object.keys(trig)[0]);
+          }
+        }
+        return result;
+      }
+
+      //========= Markup triggers
+      function getMfrkupTriggers(arrTrigByType) {
+        $trigTrigger.insertAdjacentHTML(
+          "beforeend",
+          getTriggers(arrTrigByType)
+        );
+        function getTrigItem(trigger) {
+          return `<option>${trigger}</option>`;
+        }
+        function getTriggers(arr) {
+          const list = `${arr.map((el) => getTrigItem(el)).join("")}`;
+          return list;
+        }
+      }
+
+      $trigNumber.style.display = "none";
+      $trigDate.style.display = "none";
+
+      const getType = () => {
+        type = $trigType.options[$trigType.selectedIndex].text;
+        trigersByType = getTrigersByType(triggers);
+
+        switch (type) {
+          case "string":
+            value = $trigText.value;
+            $trigText.style.display = "";
+            $trigNumber.style.display = "none";
+            $trigDate.style.display = "none";
+            break;
+          case "number":
+            value = $trigNumber.value;
+            $trigNumber.style.display = "";
+            $trigText.style.display = "none";
+            $trigDate.style.display = "none";
+            break;
+          case "date":
+            value = $trigDate.value;
+            $trigDate.style.display = "";
+            $trigNumber.style.display = "none";
+            $trigText.style.display = "none";
+            break;
+          default:
+            value = $trigText.value;
+            $trigText.style.display = "";
+            $trigNumber.style.display = "none";
+            $trigDate.style.display = "none";
+        }
+      };
+
+      $trigType.addEventListener("change", () => {
+        getType();
+        $trigTrigger.innerHTML = "";
+
+        getMfrkupTriggers(trigersByType);
+        console.log($trigTrigger);
+      });
+
+      // ========
+
+      $trigBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        getType();
+
+        alertObj = {
+          trigReport: $trigReport.options[$trigReport.selectedIndex].text,
+          trigType: type,
+          trigTrigger: $trigTrigger.options[$trigTrigger.selectedIndex].text,
+          trigValue: value,
+          lineNumber: $lineNumber.value,
+        };
+        console.log(alertObj);
+      });
+
+      // ============ Перемикання по Радіобатоннах
+      // Trigger: hiden line number
+      $lineNumber.style.display = "none";
+      document.querySelectorAll(".radio-lines").forEach((elem) => {
+        elem.addEventListener("click", function (e) {
+          $lineNumber.value = "";
+          e.target.value === "specificLines"
+            ? ($lineNumber.style.display = "")
+            : ($lineNumber.style.display = "none");
+        });
+      });
+    </script>
+  </body>
+</html>
