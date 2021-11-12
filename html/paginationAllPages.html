@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Paginetion</title>
+
+    <style>
+      .container {
+        width: 800px;
+        margin: 20px auto;
+        height: 550px;
+        background: #e8f5e9;
+        border-radius: 10px;
+        border: 1px solid #2fa803;
+        border-radius: 5px;
+      }
+
+      .d-flex {
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+      }
+
+      .chart-block {
+        padding: 1.5em;
+        display: flex;
+        flex-direction: row !important;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .chart-list {
+        width: 100%;
+        padding: 0 !important;
+        align-items: center;
+      }
+
+      .chart-list > li {
+        list-style: none;
+        width: 85%;
+      }
+
+      .chart_name {
+        font-size: medium;
+        color: #2a2a2a;
+        font-weight: bold;
+      }
+
+      .chart-wrap {
+        align-items: center;
+      }
+
+      .chart-controls {
+        display: flex;
+        flex-flow: row wrap;
+        margin-left: auto;
+      }
+
+      .chart-controls {
+        align-self: start;
+      }
+
+      .chart-value {
+        color: #4b286d;
+      }
+
+      .chart-controls > button,
+      .chart-controls > a {
+        margin: 0 1em;
+        height: 3em;
+        display: flex;
+        align-items: center;
+      }
+
+      .chart-edit,
+      .chart-delete {
+        width: 3em;
+      }
+
+      .report-select {
+        padding: 0.5em;
+        font-size: 1.1em;
+        margin-right: 0.2em;
+        border-radius: 0.2em;
+      }
+
+      .new-report-group {
+        display: flex;
+        align-items: center;
+      }
+
+      /* Chart cadr */
+      .chart-form {
+        margin-bottom: 30px;
+        padding: 2em;
+        width: 98%;
+        background: #fff;
+        border-radius: 4px;
+        box-shadow: 0 0.125rem 0.25rem 0 rgb(58 59 69 / 20%);
+      }
+
+      .chart-title {
+        display: block;
+        margin-right: 50px;
+        width: 100%;
+      }
+
+      .chart-wraper {
+        display: block;
+        margin-bottom: 25px;
+        padding: 15px;
+        border: 1px solid #858796;
+        border-radius: 4px;
+      }
+
+      .chart-name {
+        margin-bottom: 20px;
+        padding: 0 5px;
+      }
+
+      .chart-back {
+        padding: 10px 5px;
+        background-color: #f1f1f1;
+        border-radius: 0.3em;
+      }
+
+      .chart-items {
+        display: flex;
+      }
+
+      .chart-items > div {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-right: 60px;
+      }
+
+      .chart-select > select,
+      .chart-input > input {
+        width: 180px;
+        height: 32px;
+        padding: 0px 7px;
+        cursor: pointer;
+        border: 1px solid #858796;
+        border-radius: 5px;
+      }
+
+      #chart-check {
+        width: 1.2em;
+        height: 1.2em;
+        margin: 0.4em 0;
+      }
+
+      #chart-line-block {
+        flex-direction: row;
+      }
+
+      #chart-line-block > div {
+        display: flex;
+        flex-direction: column;
+        margin-right: 60px;
+      }
+
+      .chart-line > input {
+        width: 115px;
+        height: 32px;
+        padding: 0px 7px;
+        border: 1px solid #858796;
+        border-radius: 5px;
+      }
+
+      .chart-btn {
+        display: flex;
+      }
+
+      .chart-btn > button {
+        margin-left: auto;
+      }
+
+      #chart-create {
+        font-size: 1.15em;
+        margin-left: auto;
+      }
+
+      /* paginetion */
+      .chart-paginetion {
+        position: relative;
+        margin: auto;
+        width: 240px;
+      }
+
+      .btn-left {
+        position: absolute;
+        left: 20px;
+        padding: 10px;
+        width: 40px;
+        color: #fff;
+        font-size: 16px;
+        font-weight: 700;
+        background: #2fa803;
+        border: 1px solid #dcedc8;
+        outline: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.25s ease;
+      }
+
+      .btn-left:focus {
+        outline: 1px solid #2fa803;
+      }
+
+      .left-all {
+        left: -40px;
+        width: 50px;
+      }
+
+      .btn-right {
+        position: absolute;
+        top: 0;
+        right: 20px;
+        padding: 10px;
+        width: 40px;
+        color: #fff;
+        font-size: 16px;
+        font-weight: 700;
+        background: #2fa803;
+        border: 1px solid #dcedc8;
+        outline: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.25s ease;
+      }
+
+      .btn-right:focus {
+        outline: 1px solid #2fa803;
+      }
+
+      .right-all {
+        right: -40px;
+        width: 50px;
+      }
+
+      .chart-pages {
+        width: 80px;
+        text-align: center;
+        margin: auto;
+        margin-bottom: 20px;
+        padding: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #2fa803;
+        border: 1px solid #2fa803;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body id="page-top">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+      {{> sideBarNav charts=true}}
+
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+          {{>topBar}}
+
+          <!-- Page Heading -->
+          <div class="header-title mb-4">
+            <div class="container-fluid">
+              <div
+                class="
+                  d-flex
+                  align-items-center
+                  justify-content-between
+                  pt-4
+                  pb-4
+                "
+              >
+                <h1 class="h4 mb-0 text-white">Chart module</h1>
+                <div class="new-report-group">
+                  <select class="report-select hidden" id="chartReport">
+                    <option selected disabled>Select report</option>
+                    {{#each reportNames}}
+                    <option value="{{id}}">{{report_name}}</option>
+                    {{/each}}
+                  </select>
+                  <button
+                    class="new-btn btn btn-success mr-5 shadow-sm"
+                    id="newChart"
+                  >
+                    New <span class="fa fa-plus"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Begin Page Content -->
+          <div class="container">
+            {{> preloader}}
+            <div class="card shadow-sm message-box" id="chartMes">
+              <span></span>
+              <button class="btn" id="closeMesBox">
+                <span class="fa fa-times"></span>
+              </button>
+            </div>
+
+            <!-- Pagination -->
+            <ul class="charts-list d-flex flex-column">
+              <li class="chart-block card shadow-sm mb-2 mt-2">
+                <div class="chart-list d-flex flex-column">
+                  <p>Chart name: 1<span class="chart_name"></span></p>
+                </div>
+              </li>
+              <li class="chart-block card shadow-sm mb-2 mt-2">
+                <div class="chart-list d-flex flex-column">
+                  <p>Chart name: 2<span class="chart_name"></span></p>
+                </div>
+              </li>
+              <li class="chart-block card shadow-sm mb-2 mt-2">
+                <div class="chart-list d-flex flex-column">
+                  <p>Chart name: 3<span class="chart_name"></span></p>
+                </div>
+              </li>
+              <li class="chart-block card shadow-sm mb-2 mt-2">
+                <div class="chart-list d-flex flex-column">
+                  <p>Chart name: 4<span class="chart_name"></span></p>
+                </div>
+              </li>
+              <li class="chart-block card shadow-sm mb-2 mt-2">
+                <div class="chart-list d-flex flex-column">
+                  <p>Chart name: 5<span class="chart_name"></span></p>
+                </div>
+              </li>
+              <li class="chart-block card shadow-sm mb-2 mt-2">
+                <div class="chart-list d-flex flex-column">
+                  <p>Chart name: 6<span class="chart_name"></span></p>
+                </div>
+              </li>
+              <li class="chart-block card shadow-sm mb-2 mt-2">
+                <div class="chart-list d-flex flex-column">
+                  <p>Chart name: 7<span class="chart_name"></span></p>
+                </div>
+              </li>
+              <li class="chart-block card shadow-sm mb-2 mt-2">
+                <div class="chart-list d-flex flex-column">
+                  <p>Chart name: 8<span class="chart_name"></span></p>
+                </div>
+              </li>
+              <li class="chart-block card shadow-sm mb-2 mt-2">
+                <div class="chart-list d-flex flex-column">
+                  <p>Chart name: 9<span class="chart_name"></span></p>
+                </div>
+              </li>
+              <li class="chart-block card shadow-sm mb-2 mt-2">
+                <div class="chart-list d-flex flex-column">
+                  <p>Chart name: 10<span class="chart_name"></span></p>
+                </div>
+              </li>
+              <li class="chart-block card shadow-sm mb-2 mt-2">
+                <div class="chart-list d-flex flex-column">
+                  <p>Chart name: 11<span class="chart_name"></span></p>
+                </div>
+              </li>
+              <li class="chart-block card shadow-sm mb-2 mt-2">
+                <div class="chart-list d-flex flex-column">
+                  <p>Chart name: 12<span class="chart_name"></span></p>
+                </div>
+              </li>
+              <li class="chart-block card shadow-sm mb-2 mt-2">
+                <div class="chart-list d-flex flex-column">
+                  <p>Chart name: 13<span class="chart_name"></span></p>
+                </div>
+              </li>
+              <li class="chart-block card shadow-sm mb-2 mt-2">
+                <div class="chart-list d-flex flex-column">
+                  <p>Chart name: 14<span class="chart_name"></span></p>
+                </div>
+              </li>
+              <li class="chart-block card shadow-sm mb-2 mt-2">
+                <div class="chart-list d-flex flex-column">
+                  <p>Chart name: 15<span class="chart_name"></span></p>
+                </div>
+              </li>
+              <li class="chart-block card shadow-sm mb-2 mt-2">
+                <div class="chart-list d-flex flex-column">
+                  <p>Chart name: 16<span class="chart_name"></span></p>
+                </div>
+              </li>
+              <li class="chart-block card shadow-sm mb-2 mt-2">
+                <div class="chart-list d-flex flex-column">
+                  <p>Chart name: 17<span class="chart_name"></span></p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Paginetion -->
+          <div class="chart-paginetion">
+            <button class="btn-left left-all" id="left-all" type="button">
+              &lt; &lt;
+            </button>
+            <button class="btn-left" id="btn-left" type="button">&lt;</button>
+            <div class="chart-pages"></div>
+            <button class="btn-right" id="btn-right" type="button">&gt;</button>
+            <button class="btn-right right-all" id="right-all" type="button">
+              &gt; &gt;
+            </button>
+          </div>
+
+          <!-- /.container-fluid -->
+        </div>
+        <!-- End of Main Content -->
+        {{>footer}}
+      </div>
+      <!-- End of Content Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const $messageBox = document.querySelector("#chartMes");
+        const $closeMesBoxBtn = document.querySelector("#closeMesBox");
+        const $preloader = document.querySelector(".preloader");
+        const $newChartBtn = document.querySelector("#newChart");
+        const $chartReportSelect = document.querySelector("#chartReport");
+
+        $newChartBtn.addEventListener("click", () => {
+          $chartReportSelect.classList.toggle("hidden");
+        });
+
+        $chartReportSelect.addEventListener("change", () => {
+          window.location = `charts-builder?reportId=${$chartReportSelect.value}`;
+        });
+
+        document.querySelectorAll(".chart-delete").forEach(($deleteBtn) => {
+          $deleteBtn.addEventListener("click", async (event) => {
+            $deleteBtn.setAttribute("disabled", "");
+            $preloader.style.display = "flex";
+            const id = $deleteBtn.getAttribute("identifier");
+            const deleteRes = await deleteChart(id);
+            $preloader.style.display = "none";
+            $deleteBtn.removeAttribute("disabled");
+            if (deleteRes.error) {
+              showChartMes(deleteRes.error, true);
+            } else if (deleteRes.status == 204) {
+              showChartMes("Chart has been successfully deleted");
+            }
+            location.reload();
+          });
+        });
+
+        function showChartMes(mes = {}, error = false) {
+          if (mes.error) {
+            $messageBox.children[0].innerText = `Backend error: ${JSON.stringify(
+              mes.error
+            )}`;
+          } else {
+            $messageBox.children[0].innerText = mes;
+          }
+          $messageBox.classList.add(
+            error ? "message-error" : "message-success"
+          );
+          $messageBox.style.opacity = 1;
+          $messageBox.style.top = `${
+            document.scrollingElement.scrollTop
+              ? document.scrollingElement.scrollTop + 20
+              : 140
+          }px`;
+          setTimeout(closeChartMes, 5000);
+        }
+
+        function closeChartMes() {
+          $messageBox.style.opacity = 0;
+          $messageBox.style.top = "-100%";
+          $messageBox.classList.remove("message-error");
+          $messageBox.classList.remove("message-success");
+        }
+
+        $closeMesBoxBtn.addEventListener("click", closeChartMes);
+
+        // === pagination
+        const $elems = document.querySelectorAll(".charts-list");
+        const $btnLeft = document.querySelector("#btn-left");
+        const $btnRight = document.querySelector("#btn-right");
+        const $btnLeftAll = document.querySelector("#left-all");
+        const $btnRightAll = document.querySelector("#right-all");
+        const $pages = document.querySelector(".chart-pages");
+        const $chartBlock = document.querySelectorAll(".chart-block");
+
+        const elements = $chartBlock.length;
+        const limit = 5;
+        const totalPages = Math.ceil(elements / limit);
+        let page = 1;
+        displeyNoneAllCharts();
+        renderChartsList();
+        $btnLeft.style.display = "none";
+        $btnLeftAll.style.display = "none";
+
+        console.log("elements", elements);
+        console.log("limit", limit);
+        console.log("totalPages", totalPages);
+        console.log("page", page);
+
+        function displeyNoneAllCharts() {
+          $chartBlock.forEach((el) => {
+            el.style.display = "none";
+          });
+        }
+
+        function renderChartsList() {
+          displeyNoneAllCharts();
+          if (page === 1) {
+            $pages.textContent = `${page} - ${limit}`;
+            Array.from($elems).forEach((el) => {
+              for (let i = 0; i < limit; i++) {
+                el.children[i].style.display = "flex";
+              }
+            });
+          }
+          if (page > 1) {
+            $pages.textContent = `${page * limit - limit + 1} - ${
+              page * limit
+            }`;
+            Array.from($elems).forEach((el) => {
+              for (let i = 0; i < limit; i++) {
+                if (page * limit - i - 1 < elements) {
+                  el.children[`${page * limit - i - 1}`].style.display = "flex";
+                }
+              }
+            });
+          }
+        }
+
+        $btnLeft.addEventListener("click", () => {
+          page = page - 1;
+          renderChartsList();
+          changePage();
+        });
+
+        $btnRight.addEventListener("click", () => {
+          page = page + 1;
+          renderChartsList();
+          changePage();
+        });
+
+        $btnLeftAll.addEventListener("click", () => {
+          page = 1;
+          renderChartsList();
+          changePage();
+        });
+
+        $btnRightAll.addEventListener("click", () => {
+          page = totalPages;
+          renderChartsList();
+          changePage();
+        });
+
+        function changePage() {
+          if (page === 1) {
+            $btnLeft.style.display = "none";
+            $btnLeftAll.style.display = "none";
+          } else {
+            $btnLeft.style.display = "block";
+            $btnLeftAll.style.display = "block";
+          }
+
+          if (page === totalPages) {
+            $btnRight.style.display = "none";
+            $btnRightAll.style.display = "none";
+          } else {
+            $btnRight.style.display = "block";
+            $btnRightAll.style.display = "block";
+          }
+        }
+      });
+
+      async function deleteChart(id) {
+        try {
+          const res = await fetch(`/charts/${id}`, { method: "DELETE" });
+          if (res.status == 400) {
+            const resJSON = await res.json();
+            return resJSON;
+          }
+          return res;
+        } catch (error) {
+          return { error };
+        }
+      }
+    </script>
+  </body>
+</html>

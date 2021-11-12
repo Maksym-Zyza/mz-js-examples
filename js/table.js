@@ -61,7 +61,17 @@
 // console.log(persistence(num));
 
 // ======
-const limit = 5;
-for (let i = 0; i < limit; i++) {
-  i;
+// const limit = 5;
+// for (let i = 0; i < limit; i++) {
+//   i;
+// }
+
+//  =====
+const int = 8;
+function generateShape(n) {
+  let a = ("+".repeat(n) + "\n").repeat(n).trim();
+  a;
+  return a;
 }
+
+generateShape(int);
