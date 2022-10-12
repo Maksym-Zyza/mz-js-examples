@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Test</title>
+
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #f29154;
+      }
+      /* .generalDataBlock,
+      .statisticsBlock {
+        width: 518px;
+        min-width: 320px;
+        height: 309px;
+
+        h1 {
+          margin: 0;
+          padding: 10px;
+          font-size: 22px;
+          font-weight: 600;
+        }
+
+        ul {
+          margin: 0;
+          padding: 0;
+
+          li {
+            display: flex;
+            padding-left: 10px;
+
+            p {
+              margin: 0%;
+            }
+          }
+        }
+
+        .generalTable {
+          margin-right: 5px;
+          height: 100%;
+
+          li {
+            position: relative;
+            padding: 12px;
+
+            p {
+              width: 120px;
+            }
+
+            span {
+              max-width: 300px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              @media (max-width: 1400px) {
+                max-width: 200px;
+              }
+              @media (max-width: 1100px) {
+                max-width: 170px;
+              }
+              &:hover > .hint {
+                transform: scale(1);
+              }
+              .hint {
+                @include FrostedGlassContainer;
+                transform: scale(0);
+                transition: all 0.4s;
+                white-space: normal;
+                position: absolute;
+                left: 130px;
+                top: 38px;
+                width: 310px;
+                text-align: center;
+                background: #d6c2e8;
+                font-size: 14px;
+                padding: 3px 0;
+                z-index: 1;
+              }
+            }
+
+            span > div {
+              width: 120px;
+
+              div {
+                width: 16px;
+              }
+            }
+          }
+        }
+      } */
+    </style>
+  </head>
+  <body>
+    <div className="{style.generalDataBlock}">
+      <div className="{style.generalTable}">
+        <h1>General information</h1>
+        <ul>
+          <li>
+            <p>Name:</p>
+            <span>
+              {monitoredItem?.name}
+              <span className="{style.hint}">{monitoredItem?.name}</span>
+            </span>
+          </li>
+          <li>
+            <p>ID:</p>
+            <span>{monitoredItem?.id}</span>
+          </li>
+          <li>
+            <p>Feature file:</p>
+            <span>{monitoredItem?.dataLog}</span>
+          </li>
+          <li>
+            <p>Start date:</p>
+            <span>
+              {monitoredItem?.start_date.replace("T", " ").slice(0, -5)}
+              <span className="{style.hint}">
+                {monitoredItem?.start_date.replace("T", " ").slice(0, -5)}
+              </span>
+            </span>
+          </li>
+          <li>
+            <p>Status:</p>
+            <span>
+              <StatusTracker status={monitoredItem?.status || ""} />
+            </span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <script>
+      // document.querySelectorAll(".radio-lines").forEach((elem) => {
+      //   elem.addEventListener("click", function (e) {
+      //     e.target.value === "specificLines"
+      //       ? (hidenEl.style.display = "")
+      //       : (hidenEl.style.display = "none");
+      //   });
+      // });
+    </script>
+  </body>
+</html>

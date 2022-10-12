@@ -42,7 +42,6 @@
 
       .todo .todo-button {
         cursor: pointer;
-
         color: white;
         width: 50px;
         height: 50px;
@@ -65,7 +64,7 @@
       }
 
       .todo .todo-button.todo-button-add:hover {
-        background: mediumblue;
+        background: #52c2f8;
       }
 
       .todo .todo-button.todo-button-delete {
@@ -102,7 +101,9 @@
       .todo .todo-card .save {
         font-size: 1rem;
         margin: 0.5rem 0;
-        padding: 0.25rem 0;
+        padding: 0.25rem;
+        border-radius: 5px;
+        border-color: white;
       }
 
       .todo__items {
@@ -123,7 +124,8 @@
       .todo_delete {
         position: absolute;
         right: 0;
-        color: salmon;
+        cursor: pointer;
+        font-size: 12.5px;
       }
     </style>
   </head>
@@ -163,7 +165,7 @@
 
         add() {
           if (refs.input.disabled || !refs.input.value.length) {
-            return alert("Please enter text in the Todo field!");
+            return alert("Enter text into 'Content' field");
           }
           document
             .querySelector(".todo__items")
@@ -174,7 +176,7 @@
         create(text) {
           return `<li class="todo_item" data-todo="active">
               <p class="todo_text">${text}</p>
-              <span class="todo_delete">Delete</span>
+              <span class="todo_delete">&#10060;</span>
             </li>`;
         },
 
@@ -203,11 +205,11 @@
         },
       };
 
-      refs.button.addEventListener("click", handleTodos);
+      refs.button.addEventListener("click", handleTodo);
 
       todo.init();
 
-      function handleTodos(e) {
+      function handleTodo(e) {
         todo.add();
         todo.save();
         todo.update();
