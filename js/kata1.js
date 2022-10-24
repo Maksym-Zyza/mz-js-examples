@@ -293,5 +293,86 @@
 
 //======
 //217995.69999999553
-const d = new Date();
-d;
+// const d = new Date();
+// d;
+// //======
+
+// const numbers = "8 3 -5 42 -1 0 0 -9 4 7 4 -4";
+
+// function highAndLow(numbers) {
+//   const newArr = numbers
+//     .split(" ")
+//     .map(Number)
+//     .sort((a, b) => a - b);
+//   return `${newArr[newArr.length - 1]} ${newArr[0]} `;
+// }
+
+// // function highAndLow(numbers) {
+// //   numbers = numbers.split(" ");
+// //   return `${Math.max(...numbers)} ${Math.min(...numbers)}`;
+// // }
+
+// const ss = highAndLow(numbers);
+// ss;
+
+//=======
+// const shadesOfGrey = (n) =>
+//   [...Array(n < 0 ? 0 : n > 254 ? 254 : n)].map(
+//     (_, idx) => `#${(++idx).toString(16).padStart(2, `0`).repeat(3)}`
+//   );
+// console.log(shadesOfGrey(15));
+
+// const aa = [...Array(10)].map((_, idx) => idx)
+// aa
+
+//======
+const type = {
+  1: "text",
+  2: 2122,
+  3: ["text1", "text2", "text3"],
+  4: [1, 2, 3, 4],
+  5: null,
+  6: true,
+  7: { key: "value" },
+  8: [
+    {
+      text: "value1",
+      number: 11,
+      arr: ["text1", "text2", "text3"],
+      bool: true,
+      objArr: [
+        {
+          text: "value1",
+          number: 11,
+          arr: ["text1", "text2", "text3"],
+          isStudent: true,
+        },
+        {
+          text: "value2",
+          number: 22,
+          arr: ["text1", "text2", "text3"],
+          isStudent: false,
+        },
+      ],
+    },
+    { key2: "value2" },
+  ],
+};
+
+const getValueType = (value) => {
+  if (typeof value === "string") {
+    return value;
+  }
+  if (typeof value === "object" && value !== null) {
+    if (Array.isArray(value)) {
+      return value.map((item, idx) => (idx === 0 ? item : `, ${item}`));
+    } else {
+      return `${Object.keys(value)}: ${Object.values(value)}`;
+    }
+  } else return JSON.stringify(value);
+};
+
+const dd = Object.entries(type).map((el) => getValueType(el[1]));
+
+console.log(dd);
+console.log(dd[7]);
